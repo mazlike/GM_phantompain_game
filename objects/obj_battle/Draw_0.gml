@@ -11,7 +11,6 @@ for (var i = 0; i < array_length(unitRenderOrder); i++)
 		draw_self()
 	}
 }
-
 //Draw UI boxes
 draw_sprite_stretched(spr_box,0,x+230,y+235,300,100)
 draw_sprite_stretched(spr_box,0,x+130,y+235,90,100)

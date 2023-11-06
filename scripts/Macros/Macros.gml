@@ -4,6 +4,7 @@
 #macro RIGHT (keyboard_check_pressed(vk_right) ||  keyboard_check_pressed(ord("D")))
 #macro ENTER (keyboard_check_pressed(vk_enter))
 #macro SPACE (keyboard_check_pressed(vk_space))
+#macro ESCAPE (keyboard_check_pressed(vk_escape))
 #macro A (keyboard_check(ord("A")))
 #macro D (keyboard_check(ord("D")))
 #macro W (keyboard_check(ord("W")))

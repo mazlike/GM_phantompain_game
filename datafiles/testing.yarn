@@ -1,0 +1,22 @@
+#__PrivCrochet_version:1
+__PrivCrochet_colorID: 0
+__PrivCrochet_position: 360,-40
+__PrivCrochet_tags: 
+title: Start
+---
+Aiden: Can you [shake][c_maroon]help me?[/shake][/c] Oh, u are-are-are busy...
+Player: Let me think carefully, please... 
+-> Devour
+    Player: I devour you...
+-> What the fuck
+    Player: I ally you...
+    <<jump Good>>
+===
+__PrivCrochet_colorID: 0
+__PrivCrochet_position: 760,120
+__PrivCrochet_tags: 
+title: Good
+---
+Aiden: It's another [scale,2]Node!!!
+<<karma()>>
+===

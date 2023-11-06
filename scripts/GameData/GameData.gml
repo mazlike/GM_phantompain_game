@@ -55,6 +55,7 @@ global.party =
 [
 	{
 		name: "Player",
+		xp: 0,
 		karma: 0,
 		hp: 89,
 		hpMax: 89,

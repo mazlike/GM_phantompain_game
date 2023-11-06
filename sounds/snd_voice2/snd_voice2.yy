@@ -3,14 +3,14 @@
   "resourceVersion": "1.0",
   "name": "snd_voice2",
   "audioGroupId": {
-    "name": "audiogroup_default",
-    "path": "audiogroups/audiogroup_default",
+    "name": "audiogroup_music",
+    "path": "audiogroups/audiogroup_music",
   },
   "bitDepth": 1,
   "bitRate": 128,
   "compression": 0,
   "conversionMode": 0,
-  "duration": 0.0,
+  "duration": 0.13932,
   "parent": {
     "name": "FC_DialogueSystem",
     "path": "folders/Sounds/FC_DialogueSystem.yy",
