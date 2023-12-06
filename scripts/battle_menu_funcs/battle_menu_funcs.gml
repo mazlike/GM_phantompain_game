@@ -28,7 +28,7 @@ function Menu(_x, _y, _options, _description = -1, _width = undefined, _height =
 		//Auto height
 		if (_height == undefined)
 		{
-			height = heightLine * (_optionsCount + !(description = -1))
+			height = heightLine * (_optionsCount*2 + !(description = -1))
 			heightFull = height + ymargin * 2
 		}
 		else

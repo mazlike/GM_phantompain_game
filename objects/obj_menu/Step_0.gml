@@ -1,9 +1,4 @@
 if (!global.pause) exit
-if room != rMainMenu
-{
-	menu_pages = [ds_menu_main, ds_settings, ds_menu_audio, ds_menu_graphics]
-	
-}
 var ds_grid = menu_pages[page], ds_height = ds_grid_height(ds_grid)
 
 if (inputting)

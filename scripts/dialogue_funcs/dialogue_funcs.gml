@@ -20,10 +20,15 @@ function create_dialogue(_dialogueFile)
 
 function add_good_karma()
 {
-	global.party[0].karma += 1
+	global.party.player.karma += 1
 }
 
 function add_bad_karma()
 {
-	global.party[0].karma -= 1
+	global.party.player.karma -= 1
+}
+
+function add_fury_soul()
+{
+	array_push(global.party.player.actions, "fury")
 }

@@ -37,5 +37,10 @@ function BattleChangeHP(_target, _amount, _AliveDeadOrEither = 0)
 
 function BattleChangeMP(_target,_amount)
 {
-		
+	_target.mp = clamp(_target.mp + _amount, 0, _target.mpMax)
+}
+
+function BattleChangeStrength(_user, _amount)
+{
+	_user.strength += _amount
 }

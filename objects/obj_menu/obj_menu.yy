@@ -11,8 +11,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "MenuSystem",
-    "path": "folders/Objects/MenuSystem.yy",
+    "name": "GameMenu",
+    "path": "folders/Objects/MenuSystem/GameMenu.yy",
   },
   "parentObjectId": null,
   "persistent": false,

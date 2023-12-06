@@ -8,6 +8,7 @@ turnCount = 0
 roundCount = 0
 battleWaitTimeFrames = 15
 battleWaitTimeRemaining = 0
+soulProgression = 0
 
 currentUser = noone					// param
 currentAction = -1					// for
@@ -40,9 +41,9 @@ for (var i = 0; i < array_length(enemies); i++)
 }
 
 //Make party
-for (var i = 0; i < array_length(global.party); i++)
+for (var i = 0; i < struct_names_count(global.party); i++)
 {
-	partyUnits[i] = instance_create_depth(x+250+(i*10), y+170+(i*15),depth-10,obj_battleUnitPC,global.party[i])
+	partyUnits[i] = instance_create_depth(x+250+(i*10), y+170+(i*15),depth-10,obj_battleUnitPC,global.party.player)
 	array_push(units,partyUnits[i])
 }
 
@@ -85,13 +86,20 @@ function BattleStateSelectAction()
 			//Compile the action menu
 			var _menuOptions = []
 			var _subMenus = {}
-			
-			var _actionList = _unit.actions
+			var _actionList = []
+			for (var i = 0; i < array_length(_unit.actions); i++)
+			{
+				var _struct = struct_get(global.actionLibrary, _unit.actions[i])
+				array_push(_actionList,_struct)
+			}
 			
 			for (var i = 0; i < array_length(_actionList); i++)
 			{
 				var _action = _actionList[i]
-				var _available = true
+				if (_action.mpCost <= _unit.mp || _action.mpCost == 0)
+					var _available = true
+				else
+					var _available = false
 				var _nameAndCount = _action.name
 				if (_action.subMenu == -1)
 				{
@@ -125,7 +133,7 @@ function BattleStateSelectAction()
 				array_push(_menuOptions, [_subMenusArray[i], SubMenu,[_subMenus[$ _subMenusArray[i]]],true])
 			}
 
-			Menu(x+10, y+210, _menuOptions, , 74, 60)
+			Menu(x+10, y+210, _menuOptions,  , , )
 		}
 		else
 		{
@@ -173,7 +181,7 @@ function BattleStatePerformAction()
 			
 			if (variable_struct_exists(currentAction, "effectSprite"))
 			{
-				if (currentAction.effectOnTarget == MODE.ALWAYS) || ( (currentAction.effectOnTarget == MODE.VARIES) && (array_length(currentTargets) <= 1) )
+				if (((currentAction.effectOnTarget == MODE.ALWAYS) || ( (currentAction.effectOnTarget == MODE.VARIES) && (array_length(currentTargets) <= 1))) && currentAction.subMenu != "Souls")
 				{
 					for (var i = 0; i < array_length(currentTargets); i++)
 					{
@@ -181,10 +189,22 @@ function BattleStatePerformAction()
 						
 					}
 				}
+				else if (((currentAction.effectOnTarget == MODE.ALWAYS) || ( (currentAction.effectOnTarget == MODE.VARIES) && (array_length(currentTargets) <= 1))) && currentAction.subMenu == "Souls")
+				{
+					soulProgression = 0
+					for (var i = 0; i < array_length(currentTargets); i++)
+					{
+						instance_create_depth(currentTargets[i].x, currentTargets[i].y, currentTargets[i].depth+9, obj_soulEffect,
+						{
+							sprite_index : currentAction.effectSprite
+						})
+					}
+				}
 				else //play it at 0,0
 				{
 					var _effectSprite = currentAction.effectSprite
-					if (variable_struct_exists(currentAction, "effectSpriteNoTarget")) _effectSprite = currentAction.effectSpriteNoTarget
+					if (variable_struct_exists(currentAction, "effectSpriteNoTarget")) 
+						_effectSprite = currentAction.effectSpriteNoTarget
 					instance_create_depth(x,y,depth-100,obj_battleEffect, {sprite_index : _effectSprite})
 				}	
 			}
@@ -205,12 +225,22 @@ function BattleStatePerformAction()
 	}
 }
 
+function SetPlayerFeatures()
+{
+	global.party.player.hp = partyUnits[0].hp
+	global.party.player.mp = partyUnits[0].mp
+	global.party.player.xp = partyUnits[0].xp
+}
+
+
 function BattleStateVictoryCheck()
 {
 	if (enemyDead == array_length(enemyUnits))
 	{
+		SetPlayerFeatures()
 		instance_activate_all()
 		instance_destroy(creator)
+		instance_destroy(obj_soulEffect)
 		instance_destroy()
 	}
 	else

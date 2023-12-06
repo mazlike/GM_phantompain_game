@@ -1,3 +1,8 @@
+global.game_data = 
+{	
+	room_data: {},
+	player_data: {}
+}
 
 enum MODE
 {
@@ -14,6 +19,7 @@ global.actionLibrary =
 		name: "Attack",
 		description: "{0} attacks!",
 		subMenu: -1,
+		mpCost: 0,
 		targetRequired: true,
 		targetEnemyByDefault: true,
 		targetAll: MODE.NEVER,
@@ -31,7 +37,7 @@ global.actionLibrary =
 		name : "Ice",
 		description : "{0} casts Ice!",
 		subMenu : "Magic",
-		mpCost : 4,
+		mpCost : 13,
 		targetRequired: true,
 		targetEnemyByDefault: true,
 		targetAll: MODE.VARIES,
@@ -45,14 +51,37 @@ global.actionLibrary =
 				var _damage = irandom_range(41,42)
 				if (array_length(_targets)> 1) _damage = ceil(_damage*0.75)
 				BattleChangeHP(_targets[i], -_damage)
+				BattleChangeMP(_user,mpCost)
 			}
+		}
+	},
+	fury:
+	{
+		name : "Fury",
+		description: "{0} transiting to fury soul",
+		subMenu : "Souls",
+		mpCost : 10,
+		targetRequired: true,
+		targetEnemyByDefault: false,
+		targetAll: MODE.NEVER,
+		userAnimation: "transition",
+		effectSprite: spr_furySoul,
+		effectOnTarget: MODE.ALWAYS,
+		func: function(_user)
+		{
+			var _damage = irandom_range(7,14)
+			BattleChangeHP(_user, -_damage)
+			BattleChangeMP(_user,mpCost)
+			BattleChangeStrength(_user, 10)
 		}
 	}
 }
 
+
 //Party data
 global.party = 
-[
+{
+	player:
 	{
 		name: "Player",
 		xp: 0,
@@ -63,10 +92,11 @@ global.party =
 		mpMax: 25,
 		strength: 6,
 		sprites : { idle: spr_playerIdleSide, attack: spr_mainSideAttack},
-		actions : [global.actionLibrary.attack, global.actionLibrary.ice]
+		actions : ["attack","ice"]
 	}
-]
-global.companions = 
+}
+
+global.souls = 
 {
 	aiden:
 	{
@@ -82,9 +112,7 @@ global.companions =
 		gainedHp: 50,
 		mp: 5,
 		gainedStr: 5
-	}
-	
-	
+	}	
 }
 
 //Enemy Data

@@ -54,9 +54,15 @@ function change_volume()
 	
 	switch(type)
 	{
-		case 0: audio_master_gain(argument0) break
-		case 1: audio_group_set_gain(audiogroup_soundeffects, argument0,0) break
-		case 2: audio_group_set_gain(audiogroup_music, argument0,0) break
+		case 0: 
+			audio_master_gain(argument0) 
+		break
+		case 1:
+			audio_group_set_gain(audiogroup_soundeffects, argument0,0) 
+		break
+		case 2: 
+			audio_group_set_gain(audiogroup_music, argument0,0) 
+		break
 	}
 }
 
@@ -78,6 +84,7 @@ function load_game()
 function new_game()
 {
 	room_goto_next()
+	instance_destroy()
 }
 
 function exit_game()
